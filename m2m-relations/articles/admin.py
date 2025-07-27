@@ -7,12 +7,12 @@ from .models import Scope, Article, Topic
 
 class RelationshipInlineFormset(BaseInlineFormSet):
     def clean(self):
-        checked = 0  # Инициализация переменной перед использованием
+        checked = 0
         
         for form in self.forms:
-            # Проверяем, есть ли данные формы и не удалена ли форма
+
             if form.cleaned_data.get('DELETE', False):
-                continue  # Пропускаем удаленные формы
+                continue
                 
             if form.cleaned_data.get('is_main', False):
                 checked += 1
@@ -22,7 +22,7 @@ class RelationshipInlineFormset(BaseInlineFormSet):
         elif checked == 0:
             raise ValidationError('Укажите основной раздел')
             
-        return super().clean()  # Вызываем базовый метод
+        return super().clean()
 
 
 class RelationshipInline(admin.TabularInline):
